@@ -1,0 +1,25 @@
+# docker/docker-compose.yml
+version: '3'
+
+networks:
+  APINetworks:
+
+services:
+  golang:
+    container_name: golang
+    build:
+      context: dockerfiles/golang
+      args:
+        UID: ${UID}
+        GID: ${GID}
+        APP_ENV: ${APP_ENV}
+    ports:
+      - '8001:8080'
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./src:/go/src
+      - ./bin:/go/bin
+      - ./pkg:/go/pkg
+    networks:
+      - APINetworks
